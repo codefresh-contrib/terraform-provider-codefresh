@@ -57,6 +57,7 @@ func TestAccCodefreshPipeline_Concurrency(t *testing.T) {
 					resource.TestCheckResourceAttr(resourceName, "spec.0.concurrency", "1"),
 					resource.TestCheckResourceAttr(resourceName, "spec.0.branch_concurrency", "2"),
 					resource.TestCheckResourceAttr(resourceName, "spec.0.trigger_concurrency", "3"),
+					resource.TestCheckResourceAttr(resourceName, "spec.0.pack_id", "5cd1746617313f468d669045"),
 				),
 			},
 			{
@@ -71,6 +72,7 @@ func TestAccCodefreshPipeline_Concurrency(t *testing.T) {
 					resource.TestCheckResourceAttr(resourceName, "spec.0.concurrency", "4"),
 					resource.TestCheckResourceAttr(resourceName, "spec.0.branch_concurrency", "5"),
 					resource.TestCheckResourceAttr(resourceName, "spec.0.trigger_concurrency", "6"),
+					resource.TestCheckResourceAttr(resourceName, "spec.0.pack_id", "6cd1746617313f468d667048"),
 				),
 			},
 		},
