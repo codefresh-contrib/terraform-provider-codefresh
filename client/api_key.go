@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/acctest"
 	"log"
-	"net/http"
 )
 
 type ApiKeySubject struct {
@@ -28,6 +27,14 @@ type ApiKey struct {
 	TokenPrefix   string              `json:"tokenPrefix,omitempty"`
 	ScopeSnapshot ApiKeyScopeSnapshot `json:"scopeSnapshot,omitempty"`
 	Created       string              `json:"created,omitempty"`
+}
+
+type TokenResponse struct {
+	AccessToken string `json:"accessToken"`
+	User        struct {
+		UserName string `json:"userName,omitempty"`
+		Email    string `json:"email,omitempty"`
+	} `json:"user"`
 }
 
 func (client *Client) GetAPIKey(keyID string) (*ApiKey, error) {
@@ -134,55 +141,56 @@ func (client *Client) CreateApiKey(userID string, accountId string, apiKey *ApiK
 // GetXAccessToken
 func (client *Client) GetXAccessToken(userID string, accountId string) (string, error) {
 
-	url := fmt.Sprintf("%s/admin/user/loginAsUser?userId=%s", client.Host, userID)
-	request, err := http.NewRequest("GET", url, nil)
+	fullPath := fmt.Sprintf("/admin/user/loginAsUser?userId=%s", userID)
+	opts := RequestOptions{
+		Path:   fullPath,
+		Method: "GET",
+	}
+
+	resp, err := client.RequestAPI(&opts)
+
 	if err != nil {
 		return "", err
 	}
-
-	request.Header.Set("Authorization", client.Token)
-	request.Header.Set("Content-Type", "application/json; charset=utf-8")
-
-	resp, err := client.Client.Do(request)
-	if err != nil {
-		return "", err
-	}
-
-	defer resp.Body.Close()
 
 	var userCfAccessToken string
-	for _, cookie := range resp.Cookies() {
-		if cookie.Name == "cf-access-token" {
-			userCfAccessToken = cookie.Value
-			break
-		}
+	var asUserTokenResponse TokenResponse
+
+	err = DecodeResponseInto(resp, &asUserTokenResponse)
+	if err != nil {
+		return "", err
 	}
+
+	userCfAccessToken = asUserTokenResponse.AccessToken
+
 	if userCfAccessToken == "" {
 		return "", fmt.Errorf("Failed to GetXAccessToken for userId = %s", userID)
 	}
 
 	// change account
-	changeAccURL := fmt.Sprintf("%s/user/changeaccount/%s", client.Host, accountId)
-	changeAccRequest, err := http.NewRequest("POST", changeAccURL, nil)
-	if err != nil {
-		return "", err
+	fullPath = fmt.Sprintf("/user/changeaccount/%s", accountId)
+	opts = RequestOptions{
+		Path:         fullPath,
+		Method:       "POST",
+		XAccessToken: userCfAccessToken,
 	}
 
-	changeAccRequest.Header.Set("x-access-token", userCfAccessToken)
-	changeAccRequest.Header.Set("Content-Type", "application/json; charset=utf-8")
+	resp, err = client.RequestApiXAccessToken(&opts)
 
-	changeAccResp, err := client.Client.Do(changeAccRequest)
 	if err != nil {
 		return "", err
 	}
 
 	var accCfAccessToken string
-	for _, cookie := range changeAccResp.Cookies() {
-		if cookie.Name == "cf-access-token" {
-			accCfAccessToken = cookie.Value
-			break
-		}
+	var changeAccountTokenResponse TokenResponse
+
+	err = DecodeResponseInto(resp, &changeAccountTokenResponse)
+	if err != nil {
+		return "", err
 	}
+
+	accCfAccessToken = changeAccountTokenResponse.AccessToken
+
 	if accCfAccessToken == "" {
 		return "", fmt.Errorf("Failed to GetXAccessToken for userId = %s after ChangeAcocunt to %s", userID, accountId)
 	}
