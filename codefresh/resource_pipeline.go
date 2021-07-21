@@ -99,7 +99,7 @@ func resourcePipeline() *schema.Resource {
 									},
 									"revision": {
 										Type:     schema.TypeString,
-										Required: true,
+										Optional: true,
 									},
 									"context": {
 										Type:     schema.TypeString,

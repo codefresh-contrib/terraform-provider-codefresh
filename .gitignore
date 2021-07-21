@@ -5,3 +5,5 @@ dist/
 **/terraform.tfstate
 **/terraform.tfstate.backup
 tests/
+
+.vscode/
