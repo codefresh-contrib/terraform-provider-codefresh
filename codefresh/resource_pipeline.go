@@ -79,6 +79,10 @@ func resourcePipeline() *schema.Resource {
 							Optional: true,
 							Default:  0, // zero is unlimited
 						},
+						"pack_id": {
+							Type:     schema.TypeString,
+							Optional: true,
+						},
 						"spec_template": {
 							Type:     schema.TypeList,
 							Optional: true,
@@ -480,6 +484,7 @@ func flattenSpec(spec cfClient.Spec) []interface{} {
 	m["concurrency"] = spec.Concurrency
 	m["branch_concurrency"] = spec.BranchConcurrency
 	m["trigger_concurrency"] = spec.TriggerConcurrency
+	m["pack_id"] = spec.PackId
 
 	m["priority"] = spec.Priority
 
@@ -595,6 +600,7 @@ func mapResourceToPipeline(d *schema.ResourceData) *cfClient.Pipeline {
 			Concurrency:        d.Get("spec.0.concurrency").(int),
 			BranchConcurrency:  d.Get("spec.0.branch_concurrency").(int),
 			TriggerConcurrency: d.Get("spec.0.trigger_concurrency").(int),
+			PackId:             d.Get("spec.0.pack_id").(string),
 		},
 	}
 

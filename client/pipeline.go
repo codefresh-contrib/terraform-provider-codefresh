@@ -86,6 +86,7 @@ type Spec struct {
 	TerminationPolicy  []map[string]interface{} `json:"terminationPolicy,omitempty"`
 	Hooks              *Hooks                   `json:"hooks,omitempty"`
 	Options            map[string]bool          `json:"options,omitempty"`
+	PackId             string                   `json:"packId,omitempty"`
 }
 
 type Steps struct {
