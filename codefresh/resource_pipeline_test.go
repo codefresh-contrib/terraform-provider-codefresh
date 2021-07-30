@@ -268,6 +268,10 @@ func TestAccCodefreshPipeline_Triggers(t *testing.T) {
 					"tags",
 					"git",
 					"shared_context2",
+					true,
+					true,
+					true,
+					true,
 					"push.tags",
 					"codefresh-contrib/react-sample-app",
 					"triggerTestVar",
@@ -284,6 +288,10 @@ func TestAccCodefreshPipeline_Triggers(t *testing.T) {
 					resource.TestCheckResourceAttr(resourceName, "spec.0.trigger.0.name", "commits"),
 					resource.TestCheckResourceAttr(resourceName, "spec.0.trigger.1.name", "tags"),
 					resource.TestCheckResourceAttr(resourceName, "spec.0.trigger.1.contexts.0", "shared_context2"),
+					resource.TestCheckResourceAttr(resourceName, "spec.0.trigger.1.options.0.no_cache", "true"),
+					resource.TestCheckResourceAttr(resourceName, "spec.0.trigger.1.options.0.no_cf_cache", "true"),
+					resource.TestCheckResourceAttr(resourceName, "spec.0.trigger.1.options.0.reset_volume", "true"),
+					resource.TestCheckResourceAttr(resourceName, "spec.0.trigger.1.options.0.enable_notifications", "true"),
 				),
 			},
 			{
@@ -310,6 +318,10 @@ func TestAccCodefreshPipeline_Triggers(t *testing.T) {
 					"tags",
 					"git",
 					"shared_context2_update",
+					true,
+					true,
+					false,
+					false,
 					"push.tags",
 					"codefresh-contrib/react-sample-app",
 					"triggerTestVar",
@@ -324,6 +336,10 @@ func TestAccCodefreshPipeline_Triggers(t *testing.T) {
 					resource.TestCheckResourceAttr(resourceName, "spec.0.trigger.0.comment_regex", "/PR comment2/gi"),
 					resource.TestCheckResourceAttr(resourceName, "spec.0.trigger.1.variables.triggerTestVar", "triggerTestValue"),
 					resource.TestCheckResourceAttr(resourceName, "spec.0.trigger.1.contexts.0", "shared_context2_update"),
+					resource.TestCheckResourceAttr(resourceName, "spec.0.trigger.1.options.0.no_cache", "true"),
+					resource.TestCheckResourceAttr(resourceName, "spec.0.trigger.1.options.0.no_cf_cache", "true"),
+					resource.TestCheckResourceAttr(resourceName, "spec.0.trigger.1.options.0.reset_volume", "false"),
+					resource.TestCheckResourceAttr(resourceName, "spec.0.trigger.1.options.0.enable_notifications", "false"),
 				),
 			},
 		},
@@ -703,12 +719,17 @@ func testAccCodefreshPipelineBasicConfigTriggers(
 	trigger1Repo,
 	trigger2Name,
 	trigger2Context,
-	trigger2Contexts,
+	trigger2Contexts string,
+	trigger2NoCache,
+	trigger2NoCfCache,
+	trigger2ResetVolume,
+	trigger2EnableNotifications bool,
 	trigger2Event,
 	trigger2Repo,
 	trigger2VarName,
 	trigger2VarValue,
-	trigger2CommitStatusTitle string) string {
+	trigger2CommitStatusTitle string,
+) string {
 	return fmt.Sprintf(`
 resource "codefresh_pipeline" "test" {
 
@@ -753,12 +774,18 @@ resource "codefresh_pipeline" "test" {
     trigger {
         name = %q
         branch_regex = "/.*/gi"
-		context = %q
-		contexts = [
-			%q
-		]
+        context = %q
+        contexts = [
+            %q
+        ]
         description = ""
         disabled = false
+        options = {
+            no_cache             = %t
+            no_cf_cache          = %t
+            reset_volume         = %t
+            enable_notifications = %t
+        }
         events = [
           %q
         ]
@@ -794,6 +821,10 @@ resource "codefresh_pipeline" "test" {
 		trigger2Name,
 		trigger2Context,
 		trigger2Contexts,
+		trigger2NoCache,
+		trigger2NoCfCache,
+		trigger2ResetVolume,
+		trigger2EnableNotifications,
 		trigger2Event,
 		trigger2Repo,
 		trigger2VarName,

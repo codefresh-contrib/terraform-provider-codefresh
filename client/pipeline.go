@@ -48,12 +48,20 @@ type Trigger struct {
 	ModifiedFilesGlob            string              `json:"modifiedFilesGlob,omitempty"`
 	Provider                     string              `json:"provider,omitempty"`
 	Disabled                     bool                `json:"disabled,omitempty"`
+	Options                      *TriggerOptions     `json:"options,omitempty"`
 	PullRequestAllowForkEvents   bool                `json:"pullRequestAllowForkEvents,omitempty"`
 	CommitStatusTitle            string              `json:"commitStatusTitle,omitempty"`
 	Context                      string              `json:"context,omitempty"`
 	Contexts                     []string            `json:"contexts,omitempty"`
 	RuntimeEnvironment           *RuntimeEnvironment `json:"runtimeEnvironment,omitempty"`
 	Variables                    []Variable          `json:"variables,omitempty"`
+}
+
+type TriggerOptions struct {
+	NoCache             string `json:"noCache,omitempty"`
+	NoCfCache           string `json:"noCfCache,omitempty"`
+	ResetVolume         string `json:"resetVolume,omitempty"`
+	EnableNotifications string `json:"enableNotifications,omitempty"`
 }
 
 type RuntimeEnvironment struct {

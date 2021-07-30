@@ -142,6 +142,7 @@ resource "codefresh_pipeline" "test" {
 - `pull_request_allow_fork_events` - (Optional) Boolean. If this trigger is also applicable to Git forks.
 - `contexts` - (Optional) A list of strings representing the contexts ([shared_configuration](https://codefresh.io/docs/docs/configure-ci-cd-pipeline/shared-configuration/)) to be loaded when the trigger is executed
 - `runtime_environment` - (Optional) A collection of `runtime_environment` blocks as documented below.
+- `options`: (Optional) A collection `option` blocks as documented below.
 ---
 
 `runtime_environment` supports the following:
@@ -150,6 +151,15 @@ resource "codefresh_pipeline" "test" {
 - `cpu` - (Optional) A required amount of CPU.
 - `memory` - (Optional) A required amount of memory.
 - `dind_storage` - (Optional) A pipeline shared storage.
+
+---
+
+`options` supports the following:
+
+- `no_cache` - (Required) Boolean. If true, docker layer cache is disabled. Default false
+- `no_cf_cache` - (Optional) Boolean. If true, extra Codefresh caching is disabled. Default false
+- `reset_volume` - (Optional) Boolean. If true, all files on volume will be deleted before each execution. Default false
+- `enable_notifications` - (Optional) Boolean. If false the pipeline will not send notifications to Slack and status updates back to the Git provider. Default false
 
 ---
 

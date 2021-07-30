@@ -183,6 +183,34 @@ func resourcePipeline() *schema.Resource {
 										Optional: true,
 										Default:  false,
 									},
+									"options": {
+										Type:     schema.TypeList,
+										Optional: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+												"no_cache": {
+													Type:     schema.TypeBool,
+													Optional: true,
+													Default:  false,
+												},
+												"no_cf_cache": {
+													Type:     schema.TypeBool,
+													Optional: true,
+													Default:  false,
+												},
+												"reset_volume": {
+													Type:     schema.TypeBool,
+													Optional: true,
+													Default:  false,
+												},
+												"enable_notifications": {
+													Type:     schema.TypeBool,
+													Optional: true,
+													Default:  false,
+												},
+											},
+										},
+									},
 									"pull_request_allow_fork_events": {
 										Type:     schema.TypeBool,
 										Optional: true,
@@ -541,6 +569,17 @@ func flattenSpecRuntimeEnvironment(spec cfClient.RuntimeEnvironment) []map[strin
 	}
 }
 
+func flattenTriggerOptions(options cfClient.TriggerOptions) []map[string]interface{} {
+	return []map[string]interface{}{
+		{
+			"no_cache":             options.NoCache,
+			"no_cf_cache":          options.NoCfCache,
+			"reset_volume":         options.ResetVolume,
+			"enable_notifications": options.EnableNotifications,
+		},
+	}
+}
+
 func flattenTriggers(triggers []cfClient.Trigger) []map[string]interface{} {
 	var res = make([]map[string]interface{}, len(triggers))
 	for i, trigger := range triggers {
@@ -556,6 +595,9 @@ func flattenTriggers(triggers []cfClient.Trigger) []map[string]interface{} {
 		m["comment_regex"] = trigger.CommentRegex
 		m["modified_files_glob"] = trigger.ModifiedFilesGlob
 		m["disabled"] = trigger.Disabled
+		if trigger.Options != nil {
+			m["options"] = flattenTriggerOptions(*trigger.Options)
+		}
 		m["pull_request_allow_fork_events"] = trigger.PullRequestAllowForkEvents
 		m["commit_status_title"] = trigger.CommitStatusTitle
 		m["provider"] = trigger.Provider
@@ -649,6 +691,15 @@ func mapResourceToPipeline(d *schema.ResourceData) *cfClient.Pipeline {
 		}
 		variables := d.Get(fmt.Sprintf("spec.0.trigger.%v.variables", idx)).(map[string]interface{})
 		codefreshTrigger.SetVariables(variables)
+		if _, ok := d.GetOk(fmt.Sprintf("spec.0.trigger.%v.options", idx)); ok {
+			options := cfClient.TriggerOptions{
+				NoCache:             d.Get(fmt.Sprintf("spec.0.trigger.%v.options.0.no_cache", idx)).(string),
+				NoCfCache:           d.Get(fmt.Sprintf("spec.0.trigger.%v.options.0.no_cf_cache", idx)).(string),
+				ResetVolume:         d.Get(fmt.Sprintf("spec.0.trigger.%v.options.0.reset_volume", idx)).(string),
+				EnableNotifications: d.Get(fmt.Sprintf("spec.0.trigger.%v.options.0.enable_notifications", idx)).(string),
+			}
+			codefreshTrigger.Options = &options
+		}
 		if _, ok := d.GetOk(fmt.Sprintf("spec.0.trigger.%v.runtime_environment", idx)); ok {
 			triggerRuntime := cfClient.RuntimeEnvironment{
 				Name:        d.Get(fmt.Sprintf("spec.0.trigger.%v.runtime_environment.0.name", idx)).(string),
