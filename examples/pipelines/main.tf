@@ -64,6 +64,13 @@ steps:
       "context2-name",
     ]
 
+    # hybrid runner example
+    runtime_environment {
+      name = "csdp/runner"
+      cpu = "1500"      # for 1.5 CPU
+      memory = "500"    # in Mi
+    }
+    
     trigger {
       branch_regex  = "/.*/gi"
       context       = "git"

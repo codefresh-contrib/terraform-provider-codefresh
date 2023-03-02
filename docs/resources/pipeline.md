@@ -150,8 +150,8 @@ resource "codefresh_pipeline" "test" {
 `runtime_environment` supports the following:
 
 - `name` - (Required) A name of runtime.
-- `cpu` - (Optional) A required amount of CPU.
-- `memory` - (Optional) A required amount of memory.
+- `cpu` - (Optional) A required amount of CPU in millicpu (m).
+- `memory` - (Optional) A required amount of memory in mebibytes (Mi).
 - `dind_storage` - (Optional) A pipeline shared storage.
 
 ---
