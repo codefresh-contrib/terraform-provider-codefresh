@@ -1,0 +1,141 @@
+{
+  "configuration": {
+    "provider_config": {
+      "module.test:codefresh": {
+        "full_name": "registry.terraform.io/codefresh-io/codefresh",
+        "module_address": "module.test",
+        "name": "codefresh"
+      }
+    },
+    "root_module": {
+      "module_calls": {
+        "test": {
+          "module": {
+            "resources": [
+              {
+                "address": "codefresh_account_user_association.admin",
+                "expressions": {
+                  "admin": {
+                    "constant_value": true
+                  },
+                  "email": {
+                    "constant_value": "terraform-test-user+admin@codefresh.io"
+                  }
+                },
+                "mode": "managed",
+                "name": "admin",
+                "provider_config_key": "module.test:codefresh",
+                "schema_version": 0,
+                "type": "codefresh_account_user_association"
+              },
+              {
+                "address": "codefresh_account_user_association.user",
+                "expressions": {
+                  "email": {
+                    "constant_value": "terraform-test-user+user@codefresh.io"
+                  }
+                },
+                "mode": "managed",
+                "name": "user",
+                "provider_config_key": "module.test:codefresh",
+                "schema_version": 0,
+                "type": "codefresh_account_user_association"
+              }
+            ]
+          },
+          "source": "../../../../examples/account_user_associations"
+        }
+      }
+    }
+  },
+  "format_version": "1.2",
+  "planned_values": {
+    "root_module": {
+      "child_modules": [
+        {
+          "address": "module.test",
+          "resources": [
+            {
+              "address": "module.test.codefresh_account_user_association.admin",
+              "mode": "managed",
+              "name": "admin",
+              "provider_name": "registry.terraform.io/codefresh-io/codefresh",
+              "schema_version": 0,
+              "sensitive_values": {},
+              "type": "codefresh_account_user_association",
+              "values": {
+                "admin": true,
+                "email": "terraform-test-user+admin@codefresh.io"
+              }
+            },
+            {
+              "address": "module.test.codefresh_account_user_association.user",
+              "mode": "managed",
+              "name": "user",
+              "provider_name": "registry.terraform.io/codefresh-io/codefresh",
+              "schema_version": 0,
+              "sensitive_values": {},
+              "type": "codefresh_account_user_association",
+              "values": {
+                "admin": false,
+                "email": "terraform-test-user+user@codefresh.io"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "resource_changes": [
+    {
+      "address": "module.test.codefresh_account_user_association.admin",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "after": {
+          "admin": true,
+          "email": "terraform-test-user+admin@codefresh.io"
+        },
+        "after_sensitive": {},
+        "after_unknown": {
+          "id": true,
+          "status": true,
+          "username": true
+        },
+        "before": null,
+        "before_sensitive": false
+      },
+      "mode": "managed",
+      "module_address": "module.test",
+      "name": "admin",
+      "provider_name": "registry.terraform.io/codefresh-io/codefresh",
+      "type": "codefresh_account_user_association"
+    },
+    {
+      "address": "module.test.codefresh_account_user_association.user",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "after": {
+          "admin": false,
+          "email": "terraform-test-user+user@codefresh.io"
+        },
+        "after_sensitive": {},
+        "after_unknown": {
+          "id": true,
+          "status": true,
+          "username": true
+        },
+        "before": null,
+        "before_sensitive": false
+      },
+      "mode": "managed",
+      "module_address": "module.test",
+      "name": "user",
+      "provider_name": "registry.terraform.io/codefresh-io/codefresh",
+      "type": "codefresh_account_user_association"
+    }
+  ]
+}

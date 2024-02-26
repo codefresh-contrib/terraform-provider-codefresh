@@ -19,7 +19,7 @@ jobs:
         run: |
           git diff --exit-code
   gofmt:
-    name: "Ensure 'make fmt' has been run"
+    name: "Ensure 'go fmt' has been run"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo

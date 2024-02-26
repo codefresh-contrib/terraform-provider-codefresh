@@ -1,8 +1,3 @@
-provider "codefresh" {
-  api_url = var.api_url
-  token = var.token
-}
-
 resource "codefresh_project" "test" {
   name = "myproject"
 
@@ -12,7 +7,7 @@ resource "codefresh_project" "test" {
 }
 
 resource "codefresh_pipeline" "test" {
-  name    = "${codefresh_project.test.name}/react-sample-app"
+  name = "${codefresh_project.test.name}/react-sample-app"
 
   tags = [
     "production",
@@ -65,11 +60,11 @@ steps:
     ]
 
     trigger {
-      branch_regex  = "/.*/gi"
-      context       = "git"
-      description   = "Trigger for commits"
-      disabled      = false
-      events        = [
+      branch_regex = "/.*/gi"
+      context      = "git"
+      description  = "Trigger for commits"
+      disabled     = false
+      events = [
         "push.heads"
       ]
       modified_files_glob = ""
@@ -80,11 +75,11 @@ steps:
     }
 
     trigger {
-      branch_regex  = "/.*/gi"
-      context       = "git"
-      description   = "Trigger for tags"
-      disabled      = false
-      events        = [
+      branch_regex = "/.*/gi"
+      context      = "git"
+      description  = "Trigger for tags"
+      disabled     = false
+      events = [
         "push.tags"
       ]
       modified_files_glob = ""

@@ -1,0 +1,53 @@
+
+Warning: Provider development overrides are in effect
+
+The following provider development overrides are set in the CLI
+configuration:
+ - codefresh-io/codefresh in /Users/yonatankoren/software/codefresh-io/tofu-provider-codefresh
+
+The behavior may therefore not match any released version of the provider and
+applying changes may cause the state to become incompatible with published
+releases.
+module.test.data.codefresh_team.users: Reading...
+module.test.data.codefresh_team.users: Read complete after xs [id=64050eece8e7a480941d22b2]
+
+OpenTofu used the selected providers to generate the following execution plan.
+Resource actions are indicated with the following symbols:
+  + create
+
+OpenTofu will perform the following actions:
+
+  # module.test.codefresh_abac_rules.app_rule will be created
+  + resource "codefresh_abac_rules" "app_rule" {
+      + actions     = [
+          + "APP_ROLLBACK",
+          + "REFRESH",
+          + "SYNC",
+          + "TERMINATE_SYNC",
+          + "VIEW_POD_LOGS",
+        ]
+      + entity_type = "gitopsApplications"
+      + id          = (known after apply)
+      + tags        = [
+          + "dev",
+          + "untagged",
+        ]
+      + teams       = [
+          + "64050eece8e7a480941d22b2",
+        ]
+
+      + attribute {
+          + key   = "KEY"
+          + name  = "LABEL"
+          + value = "VALUE"
+        }
+    }
+
+Plan: 1 to add, 0 to change, 0 to destroy.
+
+─────────────────────────────────────────────────────────────────────────────
+
+Saved the plan to: equivalence_test_plan
+
+To perform exactly these actions, run the following command to apply:
+    tofu apply "equivalence_test_plan"

@@ -11,3 +11,5 @@ tests/
 .idea
 **/*.lock.hcl
 **/*.backup
+
+.DS_Store

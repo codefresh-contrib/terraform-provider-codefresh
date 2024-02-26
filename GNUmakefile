@@ -5,7 +5,7 @@ HOSTNAME=codefresh.io
 PKG_NAME=codefresh
 NAMESPACE=app
 BINARY=terraform-provider-${PKG_NAME}
-OS_ARCH=darwin_amd64
+OS_ARCH=$$(go env GOOS)_$$(go env GOARCH)
 TFPLUGINDOCS_VERSION=v0.14.1
 
 default: build
@@ -22,13 +22,41 @@ build: fmtcheck
 install: build
 	mv ${BINARY} $(HOME)/go/bin/
 
+equivalence: build
+	@echo "==> Preparing equivalence tests"
+	mkdir -p testing/equivalence/.plugins/registry.terraform.io/codefresh-io/codefresh/0.6.0/${OS_ARCH}/
+	cp terraform-provider-codefresh testing/equivalence/.plugins/registry.terraform.io/codefresh-io/codefresh/0.6.0/${OS_ARCH}/
+
+	cd testing/equivalence;\
+	./update-test-cases.sh;\
+
+	@echo "==> Running equivalence tests for terraform"
+	cd testing/equivalence;\
+	equivalence-testing update --binary=$$(which terraform) --goldens=results/terraform --tests=test_cases --rewrites=rewrites.jsonc
+
+	@echo "==> Running equivalence tests for opentofu"
+	cd testing/equivalence;\
+	equivalence-testing update --binary=$$(which tofu) --goldens=results/opentofu --tests=test_cases --rewrites=rewrites.jsonc
+
+	@echo "==> Comparing results"
+	cd testing/equivalence;\
+	./compare-results.sh;\
+
 fmt:
 	@echo "==> Fixing source code with gofmt..."
 	gofmt -s -w $(GOFMT_FILES)
 
+fmtcheck: SHELL:=/bin/bash
 fmtcheck:
-	@sh -c "'$(CURDIR)/scripts/gofmtcheck.sh'"
+	@echo "==> Checking that code complies with gofmt requirements..."
 
+	@gofmt_files=$$(find . -name '*.go' | grep -v vendor | xargs gofmt -l -s); \
+	if [[ -n $${gofmt_files} ]]; then\
+	    echo 'gofmt needs running on the following files:';\
+	    echo "$${gofmt_files}";\
+	    echo "You can use the command: \`make fmt\` to reformat code.";\
+	    exit 1;\
+	fi;
 lint:
 	@echo "==> Checking source code against linters..."
 	golangci-lint run ./...

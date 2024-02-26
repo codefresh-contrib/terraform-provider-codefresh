@@ -1,21 +1,6 @@
-
-variable api_url {
-  type = string
-}
-
-variable token {
+variable "test_password" {
   type    = string
   default = ""
-}
-
-variable test_password {
-  type    = string
-  default = ""
-}
-
-provider "codefresh" {
-  api_url = var.api_url
-  token   = var.token
 }
 
 resource "codefresh_registry" "acr" {
@@ -32,7 +17,7 @@ resource "codefresh_registry" "acr" {
 }
 
 resource "codefresh_registry" "gcr" {
-  name       = "gcr"
+  name = "gcr"
   #  all registries SHOULD be dependent on each other to be created/updated sequentially
   depends_on = [codefresh_registry.acr]
   spec {
@@ -62,9 +47,9 @@ data "codefresh_registry" "dockerhub" {
 
 # example with using data reference to existing registry, not managed by terraform
 resource "codefresh_registry" "dockerhub1" {
-  name              = "dockerhub1"
-  primary           = !data.codefresh_registry.dockerhub.primary
-  depends_on        = [codefresh_registry.gar]
+  name       = "dockerhub1"
+  primary    = !data.codefresh_registry.dockerhub.primary
+  depends_on = [codefresh_registry.gar]
   spec {
     dockerhub {
       username = "test"
@@ -117,9 +102,9 @@ resource "codefresh_registry" "other1" {
 }
 
 resource "codefresh_registry" "other2" {
-  name              = "other2"
-  primary           = false
-  depends_on        = [codefresh_registry.other1, codefresh_registry.bintray]
+  name       = "other2"
+  primary    = false
+  depends_on = [codefresh_registry.other1, codefresh_registry.bintray]
   spec {
     other {
       domain   = "other.io"

@@ -37,9 +37,27 @@ steps:
     matrix:
       # The following will resolve to their latest patch version
       environment:
-        - TF_VERSION=1.3.0
         - TF_VERSION=1.4.0
         - TF_VERSION=1.5.0
+        - TF_VERSION=1.6.0
+
+  equivalence_tests:
+    title: "Run tests"
+    stage: test
+    image: golang:1.18.10-alpine3.17
+    environment:
+      - TF_VERSION=1.6.0
+    commands:
+      - apk update
+      - apk add make
+      - go install github.com/warrensbox/terraform-switcher@0.13.1308
+      - terraform-switcher --latest-stable ${TF_VERSION}
+      - apk add opentofu@1.6.0_alpha2-r0 --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing/
+      - make equivalence
+    retry:
+      maxAttempts: 3
+      delay: 5
+      exponentialFactor: 2
 
   prepare_env_vars:
     title: "Preparing environment variables..."

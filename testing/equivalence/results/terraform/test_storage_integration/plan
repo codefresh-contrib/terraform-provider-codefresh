@@ -1,0 +1,81 @@
+
+Warning: Provider development overrides are in effect
+
+The following provider development overrides are set in the CLI
+configuration:
+ - codefresh-io/codefresh in /Users/yonatankoren/software/codefresh-io/tofu-provider-codefresh
+
+The behavior may therefore not match any released version of the provider and
+applying changes may cause the state to become incompatible with published
+releases.
+
+OpenTofu used the selected providers to generate the following execution plan.
+Resource actions are indicated with the following symbols:
+  + create
+
+OpenTofu will perform the following actions:
+
+  # module.test.codefresh_context.azure["create"] will be created
+  + resource "codefresh_context" "azure" {
+      + id   = (known after apply)
+      + name = "azure"
+
+      + spec {
+          + storageazuref {
+              + data {
+                  + auth {
+                      + account_key  = "accKey"
+                      + account_name = "accName"
+                      + type         = "basic"
+                    }
+                }
+            }
+        }
+    }
+
+  # module.test.codefresh_context.gcs["create"] will be created
+  + resource "codefresh_context" "gcs" {
+      + id   = (known after apply)
+      + name = "gcs"
+
+      + spec {
+          + storagegc {
+              + data {
+                  + auth {
+                      + json_config = {
+                          + "config" = "cf"
+                        }
+                      + type        = "basic"
+                    }
+                }
+            }
+        }
+    }
+
+  # module.test.codefresh_context.s3["create"] will be created
+  + resource "codefresh_context" "s3" {
+      + id   = (known after apply)
+      + name = "s3"
+
+      + spec {
+          + storages3 {
+              + data {
+                  + auth {
+                      + json_config = {
+                          + "config" = "cf"
+                        }
+                      + type        = "basic"
+                    }
+                }
+            }
+        }
+    }
+
+Plan: 3 to add, 0 to change, 0 to destroy.
+
+─────────────────────────────────────────────────────────────────────────────
+
+Saved the plan to: equivalence_test_plan
+
+To perform exactly these actions, run the following command to apply:
+    tofu apply "equivalence_test_plan"

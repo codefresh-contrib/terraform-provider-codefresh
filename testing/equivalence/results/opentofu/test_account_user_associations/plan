@@ -1,0 +1,43 @@
+
+Warning: Provider development overrides are in effect
+
+The following provider development overrides are set in the CLI
+configuration:
+ - codefresh-io/codefresh in /Users/yonatankoren/software/codefresh-io/tofu-provider-codefresh
+
+The behavior may therefore not match any released version of the provider and
+applying changes may cause the state to become incompatible with published
+releases.
+
+OpenTofu used the selected providers to generate the following execution plan.
+Resource actions are indicated with the following symbols:
+  + create
+
+OpenTofu will perform the following actions:
+
+  # module.test.codefresh_account_user_association.admin will be created
+  + resource "codefresh_account_user_association" "admin" {
+      + admin    = true
+      + email    = "tofu-test-user+admin@codefresh.io"
+      + id       = (known after apply)
+      + status   = (known after apply)
+      + username = (known after apply)
+    }
+
+  # module.test.codefresh_account_user_association.user will be created
+  + resource "codefresh_account_user_association" "user" {
+      + admin    = false
+      + email    = "tofu-test-user+user@codefresh.io"
+      + id       = (known after apply)
+      + status   = (known after apply)
+      + username = (known after apply)
+    }
+
+Plan: 2 to add, 0 to change, 0 to destroy.
+
+─────────────────────────────────────────────────────────────────────────────
+
+Saved the plan to: equivalence_test_plan
+
+To perform exactly these actions, run the following command to apply:
+    tofu apply "equivalence_test_plan"

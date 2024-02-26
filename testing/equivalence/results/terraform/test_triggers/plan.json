@@ -1,0 +1,618 @@
+{
+  "configuration": {
+    "provider_config": {
+      "module.test:codefresh": {
+        "full_name": "registry.terraform.io/codefresh-io/codefresh",
+        "module_address": "module.test",
+        "name": "codefresh",
+        "version_constraint": "~\u003e 0.1"
+      }
+    },
+    "root_module": {
+      "module_calls": {
+        "test": {
+          "module": {
+            "module_calls": {
+              "pipeline": {
+                "module": {
+                  "outputs": {
+                    "id": {
+                      "expression": {
+                        "references": [
+                          "codefresh_pipeline.test.id",
+                          "codefresh_pipeline.test"
+                        ]
+                      }
+                    }
+                  },
+                  "resources": [
+                    {
+                      "address": "codefresh_pipeline.test",
+                      "expressions": {
+                        "name": {
+                          "references": [
+                            "codefresh_project.test.name",
+                            "codefresh_project.test"
+                          ]
+                        },
+                        "original_yaml_string": {
+                          "constant_value": "version: \"1.0\"\nhooks: \n on_finish:\n   steps:\n     b:\n       image: alpine:3.9\n       commands:\n         - echo \"echo cleanup step\"\n     a:\n       image: cloudposse/slack-notifier\n       commands:\n         - echo \"Notify slack\"\nsteps:\n    freestyle:\n        image: alpine\n        commands:\n        - sleep 10\n    a_freestyle:\n        image: alpine\n        commands:\n        - sleep 10\n        - echo Hey!\n        arguments:\n            c: 3\n            a: 1\n            b: 2\n"
+                        },
+                        "spec": [
+                          {
+                            "concurrency": {
+                              "constant_value": 1
+                            },
+                            "contexts": {
+                              "constant_value": [
+                                "context1-name",
+                                "context2-name"
+                              ]
+                            },
+                            "priority": {
+                              "constant_value": 5
+                            },
+                            "trigger": [
+                              {
+                                "branch_regex": {
+                                  "constant_value": "/.*/gi"
+                                },
+                                "context": {
+                                  "constant_value": "git"
+                                },
+                                "description": {
+                                  "constant_value": "Trigger for commits"
+                                },
+                                "disabled": {
+                                  "constant_value": false
+                                },
+                                "events": {
+                                  "constant_value": [
+                                    "push.heads"
+                                  ]
+                                },
+                                "modified_files_glob": {
+                                  "constant_value": ""
+                                },
+                                "name": {
+                                  "constant_value": "commits"
+                                },
+                                "provider": {
+                                  "constant_value": "github"
+                                },
+                                "repo": {
+                                  "constant_value": "codefresh-contrib/react-sample-app"
+                                },
+                                "type": {
+                                  "constant_value": "git"
+                                }
+                              },
+                              {
+                                "branch_regex": {
+                                  "constant_value": "/.*/gi"
+                                },
+                                "context": {
+                                  "constant_value": "git"
+                                },
+                                "description": {
+                                  "constant_value": "Trigger for tags"
+                                },
+                                "disabled": {
+                                  "constant_value": false
+                                },
+                                "events": {
+                                  "constant_value": [
+                                    "push.tags"
+                                  ]
+                                },
+                                "modified_files_glob": {
+                                  "constant_value": ""
+                                },
+                                "name": {
+                                  "constant_value": "tags"
+                                },
+                                "provider": {
+                                  "constant_value": "github"
+                                },
+                                "repo": {
+                                  "constant_value": "codefresh-contrib/react-sample-app"
+                                },
+                                "type": {
+                                  "constant_value": "git"
+                                }
+                              }
+                            ],
+                            "variables": {
+                              "constant_value": {
+                                "ANOTHER_PIP_VAR": "another_value",
+                                "MY_PIP_VAR": "value"
+                              }
+                            }
+                          }
+                        ],
+                        "tags": {
+                          "constant_value": [
+                            "production",
+                            "docker"
+                          ]
+                        }
+                      },
+                      "mode": "managed",
+                      "name": "test",
+                      "provider_config_key": "module.test:codefresh",
+                      "schema_version": 0,
+                      "type": "codefresh_pipeline"
+                    },
+                    {
+                      "address": "codefresh_project.test",
+                      "expressions": {
+                        "name": {
+                          "constant_value": "myproject"
+                        },
+                        "tags": {
+                          "constant_value": [
+                            "docker"
+                          ]
+                        }
+                      },
+                      "mode": "managed",
+                      "name": "test",
+                      "provider_config_key": "module.test:codefresh",
+                      "schema_version": 0,
+                      "type": "codefresh_project"
+                    }
+                  ]
+                },
+                "source": "../pipelines"
+              }
+            },
+            "resources": [
+              {
+                "address": "codefresh_pipeline_cron_trigger.default",
+                "expressions": {
+                  "expression": {
+                    "constant_value": "0 0 2 ? * MON-FRI"
+                  },
+                  "message": {
+                    "constant_value": "test"
+                  },
+                  "pipeline_id": {
+                    "references": [
+                      "module.pipeline.id",
+                      "module.pipeline"
+                    ]
+                  }
+                },
+                "mode": "managed",
+                "name": "default",
+                "provider_config_key": "module.test:codefresh",
+                "schema_version": 0,
+                "type": "codefresh_pipeline_cron_trigger"
+              }
+            ]
+          },
+          "source": "../../../../examples/triggers"
+        }
+      }
+    }
+  },
+  "format_version": "1.2",
+  "planned_values": {
+    "root_module": {
+      "child_modules": [
+        {
+          "address": "module.test",
+          "child_modules": [
+            {
+              "address": "module.test.module.pipeline",
+              "resources": [
+                {
+                  "address": "module.test.module.pipeline.codefresh_pipeline.test",
+                  "mode": "managed",
+                  "name": "test",
+                  "provider_name": "registry.terraform.io/codefresh-io/codefresh",
+                  "schema_version": 0,
+                  "sensitive_values": {
+                    "spec": [
+                      {
+                        "contexts": [
+                          false,
+                          false
+                        ],
+                        "cron_trigger": [],
+                        "options": [],
+                        "runtime_environment": [],
+                        "spec_template": [],
+                        "termination_policy": [],
+                        "trigger": [
+                          {
+                            "events": [
+                              false
+                            ],
+                            "options": [],
+                            "runtime_environment": []
+                          },
+                          {
+                            "events": [
+                              false
+                            ],
+                            "options": [],
+                            "runtime_environment": []
+                          }
+                        ],
+                        "variables": {}
+                      }
+                    ],
+                    "tags": [
+                      false,
+                      false
+                    ]
+                  },
+                  "type": "codefresh_pipeline",
+                  "values": {
+                    "is_public": false,
+                    "name": "myproject/react-sample-app",
+                    "original_yaml_string": "version: \"1.0\"\nhooks: \n on_finish:\n   steps:\n     b:\n       image: alpine:3.9\n       commands:\n         - echo \"echo cleanup step\"\n     a:\n       image: cloudposse/slack-notifier\n       commands:\n         - echo \"Notify slack\"\nsteps:\n    freestyle:\n        image: alpine\n        commands:\n        - sleep 10\n    a_freestyle:\n        image: alpine\n        commands:\n        - sleep 10\n        - echo Hey!\n        arguments:\n            c: 3\n            a: 1\n            b: 2\n",
+                    "spec": [
+                      {
+                        "branch_concurrency": 0,
+                        "concurrency": 1,
+                        "contexts": [
+                          "context1-name",
+                          "context2-name"
+                        ],
+                        "cron_trigger": [],
+                        "options": [],
+                        "pack_id": null,
+                        "priority": 5,
+                        "required_available_storage": null,
+                        "runtime_environment": [],
+                        "spec_template": [],
+                        "termination_policy": [],
+                        "trigger": [
+                          {
+                            "branch_regex": "/.*/gi",
+                            "branch_regex_input": "regex",
+                            "comment_regex": "/.*/gi",
+                            "commit_status_title": null,
+                            "context": "git",
+                            "contexts": null,
+                            "description": "Trigger for commits",
+                            "disabled": false,
+                            "events": [
+                              "push.heads"
+                            ],
+                            "modified_files_glob": "",
+                            "name": "commits",
+                            "options": [],
+                            "provider": "github",
+                            "pull_request_allow_fork_events": false,
+                            "pull_request_target_branch_regex": null,
+                            "repo": "codefresh-contrib/react-sample-app",
+                            "runtime_environment": [],
+                            "type": "git",
+                            "variables": null
+                          },
+                          {
+                            "branch_regex": "/.*/gi",
+                            "branch_regex_input": "regex",
+                            "comment_regex": "/.*/gi",
+                            "commit_status_title": null,
+                            "context": "git",
+                            "contexts": null,
+                            "description": "Trigger for tags",
+                            "disabled": false,
+                            "events": [
+                              "push.tags"
+                            ],
+                            "modified_files_glob": "",
+                            "name": "tags",
+                            "options": [],
+                            "provider": "github",
+                            "pull_request_allow_fork_events": false,
+                            "pull_request_target_branch_regex": null,
+                            "repo": "codefresh-contrib/react-sample-app",
+                            "runtime_environment": [],
+                            "type": "git",
+                            "variables": null
+                          }
+                        ],
+                        "trigger_concurrency": 0,
+                        "variables": {
+                          "ANOTHER_PIP_VAR": "another_value",
+                          "MY_PIP_VAR": "value"
+                        }
+                      }
+                    ],
+                    "tags": [
+                      "docker",
+                      "production"
+                    ]
+                  }
+                },
+                {
+                  "address": "module.test.module.pipeline.codefresh_project.test",
+                  "mode": "managed",
+                  "name": "test",
+                  "provider_name": "registry.terraform.io/codefresh-io/codefresh",
+                  "schema_version": 0,
+                  "sensitive_values": {
+                    "tags": [
+                      false
+                    ]
+                  },
+                  "type": "codefresh_project",
+                  "values": {
+                    "name": "myproject",
+                    "tags": [
+                      "docker"
+                    ],
+                    "variables": null
+                  }
+                }
+              ]
+            }
+          ],
+          "resources": [
+            {
+              "address": "module.test.codefresh_pipeline_cron_trigger.default",
+              "mode": "managed",
+              "name": "default",
+              "provider_name": "registry.terraform.io/codefresh-io/codefresh",
+              "schema_version": 0,
+              "sensitive_values": {},
+              "type": "codefresh_pipeline_cron_trigger",
+              "values": {
+                "expression": "0 0 2 ? * MON-FRI",
+                "message": "test"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "relevant_attributes": [
+    {
+      "attribute": [
+        "name"
+      ],
+      "resource": "module.test.module.pipeline.codefresh_project.test"
+    },
+    {
+      "attribute": [
+        "id"
+      ],
+      "resource": "module.test.module.pipeline.codefresh_pipeline.test"
+    }
+  ],
+  "resource_changes": [
+    {
+      "address": "module.test.codefresh_pipeline_cron_trigger.default",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "after": {
+          "expression": "0 0 2 ? * MON-FRI",
+          "message": "test"
+        },
+        "after_sensitive": {},
+        "after_unknown": {
+          "id": true,
+          "pipeline_id": true
+        },
+        "before": null,
+        "before_sensitive": false
+      },
+      "mode": "managed",
+      "module_address": "module.test",
+      "name": "default",
+      "provider_name": "registry.terraform.io/codefresh-io/codefresh",
+      "type": "codefresh_pipeline_cron_trigger"
+    },
+    {
+      "address": "module.test.module.pipeline.codefresh_pipeline.test",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "after": {
+          "is_public": false,
+          "name": "myproject/react-sample-app",
+          "original_yaml_string": "version: \"1.0\"\nhooks: \n on_finish:\n   steps:\n     b:\n       image: alpine:3.9\n       commands:\n         - echo \"echo cleanup step\"\n     a:\n       image: cloudposse/slack-notifier\n       commands:\n         - echo \"Notify slack\"\nsteps:\n    freestyle:\n        image: alpine\n        commands:\n        - sleep 10\n    a_freestyle:\n        image: alpine\n        commands:\n        - sleep 10\n        - echo Hey!\n        arguments:\n            c: 3\n            a: 1\n            b: 2\n",
+          "spec": [
+            {
+              "branch_concurrency": 0,
+              "concurrency": 1,
+              "contexts": [
+                "context1-name",
+                "context2-name"
+              ],
+              "cron_trigger": [],
+              "options": [],
+              "pack_id": null,
+              "priority": 5,
+              "required_available_storage": null,
+              "runtime_environment": [],
+              "spec_template": [],
+              "termination_policy": [],
+              "trigger": [
+                {
+                  "branch_regex": "/.*/gi",
+                  "branch_regex_input": "regex",
+                  "comment_regex": "/.*/gi",
+                  "commit_status_title": null,
+                  "context": "git",
+                  "contexts": null,
+                  "description": "Trigger for commits",
+                  "disabled": false,
+                  "events": [
+                    "push.heads"
+                  ],
+                  "modified_files_glob": "",
+                  "name": "commits",
+                  "options": [],
+                  "provider": "github",
+                  "pull_request_allow_fork_events": false,
+                  "pull_request_target_branch_regex": null,
+                  "repo": "codefresh-contrib/react-sample-app",
+                  "runtime_environment": [],
+                  "type": "git",
+                  "variables": null
+                },
+                {
+                  "branch_regex": "/.*/gi",
+                  "branch_regex_input": "regex",
+                  "comment_regex": "/.*/gi",
+                  "commit_status_title": null,
+                  "context": "git",
+                  "contexts": null,
+                  "description": "Trigger for tags",
+                  "disabled": false,
+                  "events": [
+                    "push.tags"
+                  ],
+                  "modified_files_glob": "",
+                  "name": "tags",
+                  "options": [],
+                  "provider": "github",
+                  "pull_request_allow_fork_events": false,
+                  "pull_request_target_branch_regex": null,
+                  "repo": "codefresh-contrib/react-sample-app",
+                  "runtime_environment": [],
+                  "type": "git",
+                  "variables": null
+                }
+              ],
+              "trigger_concurrency": 0,
+              "variables": {
+                "ANOTHER_PIP_VAR": "another_value",
+                "MY_PIP_VAR": "value"
+              }
+            }
+          ],
+          "tags": [
+            "docker",
+            "production"
+          ]
+        },
+        "after_sensitive": {
+          "spec": [
+            {
+              "contexts": [
+                false,
+                false
+              ],
+              "cron_trigger": [],
+              "options": [],
+              "runtime_environment": [],
+              "spec_template": [],
+              "termination_policy": [],
+              "trigger": [
+                {
+                  "events": [
+                    false
+                  ],
+                  "options": [],
+                  "runtime_environment": []
+                },
+                {
+                  "events": [
+                    false
+                  ],
+                  "options": [],
+                  "runtime_environment": []
+                }
+              ],
+              "variables": {}
+            }
+          ],
+          "tags": [
+            false,
+            false
+          ]
+        },
+        "after_unknown": {
+          "id": true,
+          "project_id": true,
+          "revision": true,
+          "spec": [
+            {
+              "contexts": [
+                false,
+                false
+              ],
+              "cron_trigger": [],
+              "options": [],
+              "runtime_environment": [],
+              "spec_template": [],
+              "termination_policy": [],
+              "trigger": [
+                {
+                  "events": [
+                    false
+                  ],
+                  "options": [],
+                  "runtime_environment": []
+                },
+                {
+                  "events": [
+                    false
+                  ],
+                  "options": [],
+                  "runtime_environment": []
+                }
+              ],
+              "variables": {}
+            }
+          ],
+          "tags": [
+            false,
+            false
+          ]
+        },
+        "before": null,
+        "before_sensitive": false
+      },
+      "mode": "managed",
+      "module_address": "module.test.module.pipeline",
+      "name": "test",
+      "provider_name": "registry.terraform.io/codefresh-io/codefresh",
+      "type": "codefresh_pipeline"
+    },
+    {
+      "address": "module.test.module.pipeline.codefresh_project.test",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "after": {
+          "name": "myproject",
+          "tags": [
+            "docker"
+          ],
+          "variables": null
+        },
+        "after_sensitive": {
+          "tags": [
+            false
+          ]
+        },
+        "after_unknown": {
+          "id": true,
+          "tags": [
+            false
+          ]
+        },
+        "before": null,
+        "before_sensitive": false
+      },
+      "mode": "managed",
+      "module_address": "module.test.module.pipeline",
+      "name": "test",
+      "provider_name": "registry.terraform.io/codefresh-io/codefresh",
+      "type": "codefresh_project"
+    }
+  ]
+}

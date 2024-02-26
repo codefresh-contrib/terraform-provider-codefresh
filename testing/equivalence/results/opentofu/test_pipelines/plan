@@ -1,0 +1,123 @@
+
+Warning: Provider development overrides are in effect
+
+The following provider development overrides are set in the CLI
+configuration:
+ - codefresh-io/codefresh in /Users/yonatankoren/software/codefresh-io/tofu-provider-codefresh
+
+The behavior may therefore not match any released version of the provider and
+applying changes may cause the state to become incompatible with published
+releases.
+
+OpenTofu used the selected providers to generate the following execution plan.
+Resource actions are indicated with the following symbols:
+  + create
+
+OpenTofu will perform the following actions:
+
+  # module.test.codefresh_pipeline.test will be created
+  + resource "codefresh_pipeline" "test" {
+      + id                   = (known after apply)
+      + is_public            = false
+      + name                 = "myproject/react-sample-app"
+      + original_yaml_string = <<-EOT
+            version: "1.0"
+            hooks: 
+             on_finish:
+               steps:
+                 b:
+                   image: alpine:3.9
+                   commands:
+                     - echo "echo cleanup step"
+                 a:
+                   image: cloudposse/slack-notifier
+                   commands:
+                     - echo "Notify slack"
+            steps:
+                freestyle:
+                    image: alpine
+                    commands:
+                    - sleep 10
+                a_freestyle:
+                    image: alpine
+                    commands:
+                    - sleep 10
+                    - echo Hey!
+                    arguments:
+                        c: 3
+                        a: 1
+                        b: 2
+        EOT
+      + project_id           = (known after apply)
+      + revision             = (known after apply)
+      + tags                 = [
+          + "docker",
+          + "production",
+        ]
+
+      + spec {
+          + branch_concurrency  = 0
+          + concurrency         = 1
+          + contexts            = [
+              + "context1-name",
+              + "context2-name",
+            ]
+          + priority            = 5
+          + trigger_concurrency = 0
+          + variables           = {
+              + "ANOTHER_PIP_VAR" = "another_value"
+              + "MY_PIP_VAR"      = "value"
+            }
+
+          + trigger {
+              + branch_regex                   = "/.*/gi"
+              + branch_regex_input             = "regex"
+              + comment_regex                  = "/.*/gi"
+              + context                        = "git"
+              + description                    = "Trigger for commits"
+              + disabled                       = false
+              + events                         = [
+                  + "push.heads",
+                ]
+              + name                           = "commits"
+              + provider                       = "github"
+              + pull_request_allow_fork_events = false
+              + repo                           = "codefresh-contrib/react-sample-app"
+              + type                           = "git"
+            }
+          + trigger {
+              + branch_regex                   = "/.*/gi"
+              + branch_regex_input             = "regex"
+              + comment_regex                  = "/.*/gi"
+              + context                        = "git"
+              + description                    = "Trigger for tags"
+              + disabled                       = false
+              + events                         = [
+                  + "push.tags",
+                ]
+              + name                           = "tags"
+              + provider                       = "github"
+              + pull_request_allow_fork_events = false
+              + repo                           = "codefresh-contrib/react-sample-app"
+              + type                           = "git"
+            }
+        }
+    }
+
+  # module.test.codefresh_project.test will be created
+  + resource "codefresh_project" "test" {
+      + id   = (known after apply)
+      + name = "myproject"
+      + tags = [
+          + "docker",
+        ]
+    }
+
+Plan: 2 to add, 0 to change, 0 to destroy.
+
+─────────────────────────────────────────────────────────────────────────────
+
+Saved the plan to: equivalence_test_plan
+
+To perform exactly these actions, run the following command to apply:
+    tofu apply "equivalence_test_plan"

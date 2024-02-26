@@ -1,0 +1,13 @@
+// https://github.com/opentofu/equivalence-testing/blob/3bc3ca8b5f3761fb23d48220d4c0fe4de0a97c9b/examples/rewrites.jsonc
+{
+  "plan": {
+    "Terraform": "OpenTofu",
+    "terraform": "tofu",
+    // This rewrite is necessary because the word wrap is different - the
+    // character count differs between "Terraform" and "OpenTofu" so the lines
+    // are wrapped slightly differently. In fact, OpenTofu's version is slightly
+    // more pleasing to the eye.
+    "execution\nplan. Resource": "execution plan.\nResource",
+    "complete after .*s": "complete after xs" // completion time may vary
+  }
+}

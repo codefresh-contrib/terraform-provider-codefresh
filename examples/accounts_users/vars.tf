@@ -1,22 +1,20 @@
-variable api_url {}
-
-variable default_acccount_limits {
-    type = map(any)
-    default = {
-        collaborators = 100
-        parallel_builds = 10
-    }
+variable "default_acccount_limits" {
+  type = map(any)
+  default = {
+    collaborators   = 100
+    parallel_builds = 10
+  }
 }
 
-variable default_idps {
+variable "default_idps" {
   type = map(any)
 }
 
-variable accounts {
+variable "accounts" {
   type = map(any)
 }
 
-variable users {
+variable "users" {
   //type = map(any)
 }
 

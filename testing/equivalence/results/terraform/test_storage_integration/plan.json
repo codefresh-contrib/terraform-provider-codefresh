@@ -1,0 +1,610 @@
+{
+  "configuration": {
+    "provider_config": {
+      "module.test:codefresh": {
+        "full_name": "registry.terraform.io/codefresh-io/codefresh",
+        "module_address": "module.test",
+        "name": "codefresh",
+        "version_constraint": "~\u003e 0.1"
+      }
+    },
+    "root_module": {
+      "module_calls": {
+        "test": {
+          "module": {
+            "resources": [
+              {
+                "address": "codefresh_context.azure",
+                "expressions": {
+                  "name": {
+                    "constant_value": "azure"
+                  },
+                  "spec": [
+                    {
+                      "storageazuref": [
+                        {
+                          "data": [
+                            {
+                              "auth": [
+                                {
+                                  "account_key": {
+                                    "constant_value": "accKey"
+                                  },
+                                  "account_name": {
+                                    "constant_value": "accName"
+                                  },
+                                  "type": {
+                                    "constant_value": "basic"
+                                  }
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "mode": "managed",
+                "name": "azure",
+                "provider_config_key": "module.test:codefresh",
+                "schema_version": 0,
+                "type": "codefresh_context"
+              },
+              {
+                "address": "codefresh_context.gcs",
+                "expressions": {
+                  "name": {
+                    "constant_value": "gcs"
+                  },
+                  "spec": [
+                    {
+                      "storagegc": [
+                        {
+                          "data": [
+                            {
+                              "auth": [
+                                {
+                                  "json_config": {},
+                                  "type": {
+                                    "constant_value": "basic"
+                                  }
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "mode": "managed",
+                "name": "gcs",
+                "provider_config_key": "module.test:codefresh",
+                "schema_version": 0,
+                "type": "codefresh_context"
+              },
+              {
+                "address": "codefresh_context.s3",
+                "expressions": {
+                  "name": {
+                    "constant_value": "s3"
+                  },
+                  "spec": [
+                    {
+                      "storages3": [
+                        {
+                          "data": [
+                            {
+                              "auth": [
+                                {
+                                  "json_config": {},
+                                  "type": {
+                                    "constant_value": "basic"
+                                  }
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "mode": "managed",
+                "name": "s3",
+                "provider_config_key": "module.test:codefresh",
+                "schema_version": 0,
+                "type": "codefresh_context"
+              }
+            ]
+          },
+          "source": "../../../../examples/storage_integration"
+        }
+      }
+    }
+  },
+  "format_version": "1.2",
+  "planned_values": {
+    "root_module": {
+      "child_modules": [
+        {
+          "address": "module.test",
+          "resources": [
+            {
+              "address": "module.test.codefresh_context.azure[\"create\"]",
+              "index": "create",
+              "mode": "managed",
+              "name": "azure",
+              "provider_name": "registry.terraform.io/codefresh-io/codefresh",
+              "schema_version": 0,
+              "sensitive_values": {
+                "spec": [
+                  {
+                    "config": [],
+                    "secret": [],
+                    "secretyaml": [],
+                    "storageazuref": [
+                      {
+                        "data": [
+                          {
+                            "auth": [
+                              {}
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "storagegc": [],
+                    "storages3": [],
+                    "yaml": []
+                  }
+                ]
+              },
+              "type": "codefresh_context",
+              "values": {
+                "name": "azure",
+                "spec": [
+                  {
+                    "config": [],
+                    "secret": [],
+                    "secretyaml": [],
+                    "storageazuref": [
+                      {
+                        "data": [
+                          {
+                            "auth": [
+                              {
+                                "account_key": "accKey",
+                                "account_name": "accName",
+                                "type": "basic"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "storagegc": [],
+                    "storages3": [],
+                    "yaml": []
+                  }
+                ]
+              }
+            },
+            {
+              "address": "module.test.codefresh_context.gcs[\"create\"]",
+              "index": "create",
+              "mode": "managed",
+              "name": "gcs",
+              "provider_name": "registry.terraform.io/codefresh-io/codefresh",
+              "schema_version": 0,
+              "sensitive_values": {
+                "spec": [
+                  {
+                    "config": [],
+                    "secret": [],
+                    "secretyaml": [],
+                    "storageazuref": [],
+                    "storagegc": [
+                      {
+                        "data": [
+                          {
+                            "auth": [
+                              {
+                                "json_config": {}
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "storages3": [],
+                    "yaml": []
+                  }
+                ]
+              },
+              "type": "codefresh_context",
+              "values": {
+                "name": "gcs",
+                "spec": [
+                  {
+                    "config": [],
+                    "secret": [],
+                    "secretyaml": [],
+                    "storageazuref": [],
+                    "storagegc": [
+                      {
+                        "data": [
+                          {
+                            "auth": [
+                              {
+                                "json_config": {
+                                  "config": "cf"
+                                },
+                                "type": "basic"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "storages3": [],
+                    "yaml": []
+                  }
+                ]
+              }
+            },
+            {
+              "address": "module.test.codefresh_context.s3[\"create\"]",
+              "index": "create",
+              "mode": "managed",
+              "name": "s3",
+              "provider_name": "registry.terraform.io/codefresh-io/codefresh",
+              "schema_version": 0,
+              "sensitive_values": {
+                "spec": [
+                  {
+                    "config": [],
+                    "secret": [],
+                    "secretyaml": [],
+                    "storageazuref": [],
+                    "storagegc": [],
+                    "storages3": [
+                      {
+                        "data": [
+                          {
+                            "auth": [
+                              {
+                                "json_config": {}
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "yaml": []
+                  }
+                ]
+              },
+              "type": "codefresh_context",
+              "values": {
+                "name": "s3",
+                "spec": [
+                  {
+                    "config": [],
+                    "secret": [],
+                    "secretyaml": [],
+                    "storageazuref": [],
+                    "storagegc": [],
+                    "storages3": [
+                      {
+                        "data": [
+                          {
+                            "auth": [
+                              {
+                                "json_config": {
+                                  "config": "cf"
+                                },
+                                "type": "basic"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "yaml": []
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "resource_changes": [
+    {
+      "address": "module.test.codefresh_context.azure[\"create\"]",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "after": {
+          "name": "azure",
+          "spec": [
+            {
+              "config": [],
+              "secret": [],
+              "secretyaml": [],
+              "storageazuref": [
+                {
+                  "data": [
+                    {
+                      "auth": [
+                        {
+                          "account_key": "accKey",
+                          "account_name": "accName",
+                          "type": "basic"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "storagegc": [],
+              "storages3": [],
+              "yaml": []
+            }
+          ]
+        },
+        "after_sensitive": {
+          "spec": [
+            {
+              "config": [],
+              "secret": [],
+              "secretyaml": [],
+              "storageazuref": [
+                {
+                  "data": [
+                    {
+                      "auth": [
+                        {}
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "storagegc": [],
+              "storages3": [],
+              "yaml": []
+            }
+          ]
+        },
+        "after_unknown": {
+          "id": true,
+          "spec": [
+            {
+              "config": [],
+              "secret": [],
+              "secretyaml": [],
+              "storageazuref": [
+                {
+                  "data": [
+                    {
+                      "auth": [
+                        {}
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "storagegc": [],
+              "storages3": [],
+              "yaml": []
+            }
+          ]
+        },
+        "before": null,
+        "before_sensitive": false
+      },
+      "index": "create",
+      "mode": "managed",
+      "module_address": "module.test",
+      "name": "azure",
+      "provider_name": "registry.terraform.io/codefresh-io/codefresh",
+      "type": "codefresh_context"
+    },
+    {
+      "address": "module.test.codefresh_context.gcs[\"create\"]",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "after": {
+          "name": "gcs",
+          "spec": [
+            {
+              "config": [],
+              "secret": [],
+              "secretyaml": [],
+              "storageazuref": [],
+              "storagegc": [
+                {
+                  "data": [
+                    {
+                      "auth": [
+                        {
+                          "json_config": {
+                            "config": "cf"
+                          },
+                          "type": "basic"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "storages3": [],
+              "yaml": []
+            }
+          ]
+        },
+        "after_sensitive": {
+          "spec": [
+            {
+              "config": [],
+              "secret": [],
+              "secretyaml": [],
+              "storageazuref": [],
+              "storagegc": [
+                {
+                  "data": [
+                    {
+                      "auth": [
+                        {
+                          "json_config": {}
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "storages3": [],
+              "yaml": []
+            }
+          ]
+        },
+        "after_unknown": {
+          "id": true,
+          "spec": [
+            {
+              "config": [],
+              "secret": [],
+              "secretyaml": [],
+              "storageazuref": [],
+              "storagegc": [
+                {
+                  "data": [
+                    {
+                      "auth": [
+                        {
+                          "json_config": {}
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "storages3": [],
+              "yaml": []
+            }
+          ]
+        },
+        "before": null,
+        "before_sensitive": false
+      },
+      "index": "create",
+      "mode": "managed",
+      "module_address": "module.test",
+      "name": "gcs",
+      "provider_name": "registry.terraform.io/codefresh-io/codefresh",
+      "type": "codefresh_context"
+    },
+    {
+      "address": "module.test.codefresh_context.s3[\"create\"]",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "after": {
+          "name": "s3",
+          "spec": [
+            {
+              "config": [],
+              "secret": [],
+              "secretyaml": [],
+              "storageazuref": [],
+              "storagegc": [],
+              "storages3": [
+                {
+                  "data": [
+                    {
+                      "auth": [
+                        {
+                          "json_config": {
+                            "config": "cf"
+                          },
+                          "type": "basic"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "yaml": []
+            }
+          ]
+        },
+        "after_sensitive": {
+          "spec": [
+            {
+              "config": [],
+              "secret": [],
+              "secretyaml": [],
+              "storageazuref": [],
+              "storagegc": [],
+              "storages3": [
+                {
+                  "data": [
+                    {
+                      "auth": [
+                        {
+                          "json_config": {}
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "yaml": []
+            }
+          ]
+        },
+        "after_unknown": {
+          "id": true,
+          "spec": [
+            {
+              "config": [],
+              "secret": [],
+              "secretyaml": [],
+              "storageazuref": [],
+              "storagegc": [],
+              "storages3": [
+                {
+                  "data": [
+                    {
+                      "auth": [
+                        {
+                          "json_config": {}
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "yaml": []
+            }
+          ]
+        },
+        "before": null,
+        "before_sensitive": false
+      },
+      "index": "create",
+      "mode": "managed",
+      "module_address": "module.test",
+      "name": "s3",
+      "provider_name": "registry.terraform.io/codefresh-io/codefresh",
+      "type": "codefresh_context"
+    }
+  ]
+}

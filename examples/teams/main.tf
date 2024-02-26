@@ -1,21 +1,12 @@
-variable api_url {
-  type = string
-}
-
-variable token {
-  type = string
-  default = ""
-}
-provider "codefresh" {
-  api_url = var.api_url
-  token = var.token
-}
-
-variable teams {
+variable "teams" {
   type = map(any)
+  default = {
+    developers = ["user1", "user3"]
+    managers   = ["user3", "user2"]
+  }
 }
 
 module "teams" {
-    source = "../../tf_modules/teams"
-    teams = var.teams
+  source = "../.modules/teams"
+  teams  = var.teams
 }

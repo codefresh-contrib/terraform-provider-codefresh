@@ -1,0 +1,331 @@
+{
+  "configuration": {
+    "provider_config": {
+      "module.test:codefresh": {
+        "full_name": "registry.terraform.io/codefresh-io/codefresh",
+        "module_address": "module.test",
+        "name": "codefresh",
+        "version_constraint": "~\u003e 0.1"
+      }
+    },
+    "root_module": {
+      "module_calls": {
+        "test": {
+          "module": {
+            "resources": [
+              {
+                "address": "codefresh_abac_rules.app_rule",
+                "expressions": {
+                  "actions": {
+                    "constant_value": [
+                      "REFRESH",
+                      "SYNC",
+                      "TERMINATE_SYNC",
+                      "VIEW_POD_LOGS",
+                      "APP_ROLLBACK"
+                    ]
+                  },
+                  "attribute": [
+                    {
+                      "key": {
+                        "constant_value": "KEY"
+                      },
+                      "name": {
+                        "constant_value": "LABEL"
+                      },
+                      "value": {
+                        "constant_value": "VALUE"
+                      }
+                    }
+                  ],
+                  "entity_type": {
+                    "constant_value": "gitopsApplications"
+                  },
+                  "tags": {
+                    "constant_value": [
+                      "dev",
+                      "untagged"
+                    ]
+                  },
+                  "teams": {
+                    "references": [
+                      "data.codefresh_team.users.id",
+                      "data.codefresh_team.users"
+                    ]
+                  }
+                },
+                "mode": "managed",
+                "name": "app_rule",
+                "provider_config_key": "module.test:codefresh",
+                "schema_version": 0,
+                "type": "codefresh_abac_rules"
+              },
+              {
+                "address": "data.codefresh_team.users",
+                "expressions": {
+                  "name": {
+                    "constant_value": "users"
+                  }
+                },
+                "mode": "data",
+                "name": "users",
+                "provider_config_key": "module.test:codefresh",
+                "schema_version": 0,
+                "type": "codefresh_team"
+              }
+            ]
+          },
+          "source": "../../../../examples/abac_rules"
+        }
+      }
+    }
+  },
+  "format_version": "1.2",
+  "planned_values": {
+    "root_module": {
+      "child_modules": [
+        {
+          "address": "module.test",
+          "resources": [
+            {
+              "address": "module.test.codefresh_abac_rules.app_rule",
+              "mode": "managed",
+              "name": "app_rule",
+              "provider_name": "registry.terraform.io/codefresh-io/codefresh",
+              "schema_version": 0,
+              "sensitive_values": {
+                "actions": [
+                  false,
+                  false,
+                  false,
+                  false,
+                  false
+                ],
+                "attribute": [
+                  {}
+                ],
+                "tags": [
+                  false,
+                  false
+                ],
+                "teams": [
+                  false
+                ]
+              },
+              "type": "codefresh_abac_rules",
+              "values": {
+                "actions": [
+                  "APP_ROLLBACK",
+                  "REFRESH",
+                  "SYNC",
+                  "TERMINATE_SYNC",
+                  "VIEW_POD_LOGS"
+                ],
+                "attribute": [
+                  {
+                    "key": "KEY",
+                    "name": "LABEL",
+                    "value": "VALUE"
+                  }
+                ],
+                "entity_type": "gitopsApplications",
+                "tags": [
+                  "dev",
+                  "untagged"
+                ],
+                "teams": [
+                  "64050eece8e7a480941d22b2"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "prior_state": {
+    "format_version": "1.0",
+    "values": {
+      "root_module": {
+        "child_modules": [
+          {
+            "address": "module.test",
+            "resources": [
+              {
+                "address": "module.test.data.codefresh_team.users",
+                "mode": "data",
+                "name": "users",
+                "provider_name": "registry.terraform.io/codefresh-io/codefresh",
+                "schema_version": 0,
+                "sensitive_values": {
+                  "tags": [],
+                  "users": [
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false
+                  ]
+                },
+                "type": "codefresh_team",
+                "values": {
+                  "_id": "64050eece8e7a480941d22b2",
+                  "account_id": "64050eece8e7a40e1a1d22ae",
+                  "id": "64050eece8e7a480941d22b2",
+                  "name": "users",
+                  "tags": [],
+                  "type": "default",
+                  "users": [
+                    "640445a0e147e51fa2a635bf",
+                    "64050f978fad134f026be44f",
+                    "6519c24db84a36589aade546",
+                    "651ab21757ae98649b450b3f",
+                    "651c1d58ab78e76d12cfa5e5",
+                    "651c1d5854474574e3daf9af",
+                    "651c207e5447457965db03a6",
+                    "651c2f9c544745dd9adb07a2",
+                    "651c30305447454efddb1039",
+                    "651c33708ed49127b073c300",
+                    "651c435f544745deb2db3ce6",
+                    "651c443d54474506cfdb3e15",
+                    "651c55be8ed491672973f271",
+                    "651c59791761796def0b296c",
+                    "651d275a54474514b5db8915",
+                    "652d843485b74730bfde344b",
+                    "652d84411b31f4453699d658",
+                    "652d844185b747ffc9de3598",
+                    "652d852c1b31f45fd099e4b3",
+                    "652d852e85b7470e2dde43c4",
+                    "652d8c16843ad31a08a9d934",
+                    "652d8c258356a5123a10555e",
+                    "652d8cf557961b5fb7395b38",
+                    "652d8d07843ad355e9a9e69b",
+                    "652d9005e628aa398743807b",
+                    "652d900c52bb9815b634f62f",
+                    "652e7aa71bb3fc905a32e180",
+                    "652e7ac5a830b06416aa55fd",
+                    "652e7ac5582aa8ffb169b02a",
+                    "652e7adae440d45688fe85b2"
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "relevant_attributes": [
+    {
+      "attribute": [
+        "id"
+      ],
+      "resource": "module.test.data.codefresh_team.users"
+    }
+  ],
+  "resource_changes": [
+    {
+      "address": "module.test.codefresh_abac_rules.app_rule",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "after": {
+          "actions": [
+            "APP_ROLLBACK",
+            "REFRESH",
+            "SYNC",
+            "TERMINATE_SYNC",
+            "VIEW_POD_LOGS"
+          ],
+          "attribute": [
+            {
+              "key": "KEY",
+              "name": "LABEL",
+              "value": "VALUE"
+            }
+          ],
+          "entity_type": "gitopsApplications",
+          "tags": [
+            "dev",
+            "untagged"
+          ],
+          "teams": [
+            "64050eece8e7a480941d22b2"
+          ]
+        },
+        "after_sensitive": {
+          "actions": [
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "attribute": [
+            {}
+          ],
+          "tags": [
+            false,
+            false
+          ],
+          "teams": [
+            false
+          ]
+        },
+        "after_unknown": {
+          "actions": [
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "attribute": [
+            {}
+          ],
+          "id": true,
+          "tags": [
+            false,
+            false
+          ],
+          "teams": [
+            false
+          ]
+        },
+        "before": null,
+        "before_sensitive": false
+      },
+      "mode": "managed",
+      "module_address": "module.test",
+      "name": "app_rule",
+      "provider_name": "registry.terraform.io/codefresh-io/codefresh",
+      "type": "codefresh_abac_rules"
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     codefresh = {
-      source = "codefresh-io/codefresh"
+      source = "registry.terraform.io/codefresh-io/codefresh"
     }
   }
 }

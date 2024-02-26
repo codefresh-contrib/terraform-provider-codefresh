@@ -2,7 +2,6 @@ package codefresh
 
 import (
 	"fmt"
-	"io/ioutil"
 	"log"
 	"os"
 	"regexp"
@@ -48,8 +47,8 @@ func TestCleanUpStepFromTransientValues(t *testing.T) {
 }
 
 func TestNormalizeYamlStringStepTypes(t *testing.T) {
-	testFile := "../test_data/step_types/testStepWithRuntimeData.yaml"
-	yamlString, err := ioutil.ReadFile(testFile)
+	testFile := "../testing/fixtures/testStepWithRuntimeData.yaml"
+	yamlString, err := os.ReadFile(testFile)
 	if err != nil {
 		t.Errorf("Unable to open test file  %s. Err: #%v ", testFile, err)
 	}
@@ -84,8 +83,8 @@ func TestSortVersions(t *testing.T) {
 }
 
 func TestExtractSteps(t *testing.T) {
-	testFile := "../test_data/step_types/testStepTypesOrder.yaml"
-	yamlString, err := ioutil.ReadFile(testFile)
+	testFile := "../testing/fixtures/testStepTypesOrder.yaml"
+	yamlString, err := os.ReadFile(testFile)
 	if err != nil {
 		t.Errorf("Unable to read file %s", testFile)
 	}
@@ -112,11 +111,11 @@ func TestAccCodefreshStepTypes(t *testing.T) {
 		}
 		name := accountName + "/" + stepTypesNamePrefix + acctest.RandString(10)
 		resourceName := "codefresh_step_types.test"
-		contentStepsV1, err := ioutil.ReadFile("../test_data/step_types/testSteps.yaml")
+		contentStepsV1, err := os.ReadFile("../testing/fixtures/testSteps.yaml")
 		if err != nil {
 			log.Fatal(err)
 		}
-		contentStepsV2, err := ioutil.ReadFile("../test_data/step_types/testStepsTemplate.yaml")
+		contentStepsV2, err := os.ReadFile("../testing/fixtures/testStepsTemplate.yaml")
 		if err != nil {
 			log.Fatal(err)
 		}
