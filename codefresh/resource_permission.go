@@ -84,6 +84,13 @@ Action to be allowed. Possible values:
 					"debug",
 				}, false),
 			},
+			"rule_type": {
+				Description: "Rule type - can be either `all` or `any`. If all is specified the rule will apply on resources that have all the tags. If any is specified the rule will apply on resources that have any of the tags. If not specified, deafult behavior is `any`.",
+				Type:        schema.TypeString,
+				Optional:    true,
+				//Default:      "any",
+				ValidateFunc: validation.StringInSlice([]string{"all", "any"}, false),
+			},
 			"tags": {
 				Description: `
 The tags for which to apply the permission. Supports two custom tags:
@@ -163,7 +170,7 @@ func resourcePermissionUpdate(d *schema.ResourceData, meta interface{}) error {
 	permission := *mapResourceToPermission(d)
 
 	// In case team, action or relatedResource or resource have changed - a new permission needs to be created (but without recreating the terraform resource as destruction of resources is alarming for end users)
-	if d.HasChanges("team", "action", "related_resource", "resource") {
+	if d.HasChanges("team", "action", "related_resource", "resource", "rule_type") {
 		deleteErr := resourcePermissionDelete(d, meta)
 
 		if deleteErr != nil {
@@ -231,6 +238,11 @@ func mapPermissionToResource(permission *cfclient.Permission, d *schema.Resource
 		return err
 	}
 
+	err = d.Set("rule_type", permission.RuleType)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
 
@@ -249,6 +261,7 @@ func mapResourceToPermission(d *schema.ResourceData) *cfclient.Permission {
 		Action:          d.Get("action").(string),
 		Resource:        d.Get("resource").(string),
 		RelatedResource: d.Get("related_resource").(string),
+		RuleType:        d.Get("rule_type").(string),
 		Tags:            tags,
 	}
 

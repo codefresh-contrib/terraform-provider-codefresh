@@ -59,6 +59,7 @@ resource "codefresh_permission" "developers" {
 - `_id` (String) The permission ID.
 - `related_resource` (String) Specifies the resource to use when evaluating the tags. Possible values:
 	* project
+- `rule_type` (String) Rule type - can be either `all` or `any`. If all is specified the rule will apply on resources that have all the tags. If any is specified the rule will apply on resources that have any of the tags. If not specified, deafult behavior is `any`.
 - `tags` (Set of String) The tags for which to apply the permission. Supports two custom tags:
 	* untagged:  Apply to all resources without tags
   * (asterisk): Apply to all resources with any tag

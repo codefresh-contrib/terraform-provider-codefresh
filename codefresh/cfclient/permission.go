@@ -12,6 +12,7 @@ type Permission struct {
 	RelatedResource string   `json:"relatedResource,omitempty"`
 	Action          string   `json:"action,omitempty"`
 	Account         string   `json:"account,omitempty"`
+	RuleType        string   `json:"ruleType,omitempty"`
 	Tags            []string `json:"attributes,omitempty"`
 }
 
@@ -23,6 +24,7 @@ type NewPermission struct {
 	RelatedResource string   `json:"relatedResource,omitempty"`
 	Action          string   `json:"action,omitempty"`
 	Account         string   `json:"account,omitempty"`
+	RuleType        string   `json:"ruleType,omitempty"`
 	Tags            []string `json:"tags,omitempty"`
 }
 
@@ -93,6 +95,7 @@ func (client *Client) CreatePermission(permission *Permission) (*Permission, err
 		RelatedResource: permission.RelatedResource,
 		Action:          permission.Action,
 		Account:         permission.Account,
+		RuleType:        permission.RuleType,
 		Tags:            permission.Tags,
 	}
 

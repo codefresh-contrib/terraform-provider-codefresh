@@ -21,18 +21,19 @@ func TestAccCodefreshPermissionConfig(t *testing.T) {
 		CheckDestroy: testAccCheckCodefreshContextDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccCodefreshPermissionConfig("create", "pipeline", "null", []string{"production", "*"}),
+				Config: testAccCodefreshPermissionConfig("create", "pipeline", "null", []string{"production", "test"}, "all"),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCodefreshPermissionExists(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "action", "create"),
 					resource.TestCheckResourceAttr(resourceName, "resource", "pipeline"),
-					resource.TestCheckResourceAttr(resourceName, "tags.0", "*"),
+					resource.TestCheckResourceAttr(resourceName, "tags.0", "production"),
 					resource.TestCheckResourceAttr(resourceName, "related_resource", ""),
-					resource.TestCheckResourceAttr(resourceName, "tags.1", "production"),
+					resource.TestCheckResourceAttr(resourceName, "tags.1", "test"),
+					resource.TestCheckResourceAttr(resourceName, "rule_type", "all"),
 				),
 			},
 			{
-				Config: testAccCodefreshPermissionConfig("create", "pipeline", "project", []string{"production", "*"}),
+				Config: testAccCodefreshPermissionConfig("create", "pipeline", "project", []string{"production", "*"}, "any"),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckCodefreshPermissionExists(resourceName),
 					resource.TestCheckResourceAttr(resourceName, "action", "create"),
@@ -40,6 +41,7 @@ func TestAccCodefreshPermissionConfig(t *testing.T) {
 					resource.TestCheckResourceAttr(resourceName, "related_resource", "project"),
 					resource.TestCheckResourceAttr(resourceName, "tags.0", "*"),
 					resource.TestCheckResourceAttr(resourceName, "tags.1", "production"),
+					resource.TestCheckResourceAttr(resourceName, "rule_type", "any"),
 				),
 			},
 			{
@@ -73,7 +75,7 @@ func testAccCheckCodefreshPermissionExists(resource string) resource.TestCheckFu
 }
 
 // CONFIGS
-func testAccCodefreshPermissionConfig(action, resource, relatedResource string, tags []string) string {
+func testAccCodefreshPermissionConfig(action, resource, relatedResource string, tags []string, ruleType string) string {
 	escapeString := func(str string) string {
 		if str == "null" {
 			return str // null means Terraform should ignore this field
@@ -93,6 +95,7 @@ func testAccCodefreshPermissionConfig(action, resource, relatedResource string, 
 		resource         = %s
 		related_resource = %s
 		tags             = [%s]
+		rule_type        = %s
 	}
-`, escapeString(action), escapeString(resource), escapeString(relatedResource), strings.Join(tagsEscaped[:], ","))
+`, escapeString(action), escapeString(resource), escapeString(relatedResource), strings.Join(tagsEscaped[:], ","), escapeString(ruleType))
 }
